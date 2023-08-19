@@ -1,0 +1,3 @@
+<?php
+  $wgSecretKey = "<redacted>";
+?>

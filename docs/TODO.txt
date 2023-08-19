@@ -1,0 +1,143 @@
+Alexp
+Georgia Tech Student Wiki
+Search
+TODO
+Namespaces
+
+    PageDiscussionUnwatch
+
+Page actions
+
+    Read
+    EditEdit sourceHistory
+
+Oscar pawn shop.jpg
+Unbalanced scales.svg
+	
+A major contributor to this article appears to have a close connection with its subject. It may require cleanup to comply with Wikipedia's content policies, particularly neutral point of view. Please discuss further on the talk page. (Learn how and when to remove this template message)
+General information
+
+    vte
+
+Contents
+
+    1 Setup automated backups
+        1.1 Database backups
+        1.2 Alright, that's done. Now I need to probably test the process of loading from the backups to make sure it is working
+        1.3 Create repo with full configuration scripts/instructions to restore the wiki from a backup.
+        1.4 Page / data backups
+    2 Make sections for 1st year FAQ
+    3 Setup email server
+    4 Secure secret keys
+        4.1 Also, configure SSL
+            4.1.1 Renewing Let'sEncrypt certificate
+    5 Configure account creation
+        5.1 Require GT emails to create an account
+        5.2 also, require account to edit lmfao
+
+Setup automated backups
+
+See: https://www.mediawiki.org/wiki/Manual:Backing_up_a_wiki
+Database backups
+
+For example, use automysqlbackup and send the daily/weekly backups to an aws s3 bucket
+
+Maybe follow this tutorialor similar. Also, would be nice to keep daily backups for past month, but then only weekly longer than that. Not sure how to do that, but I'm sure it's been done before.
+
+Note: the s3 bucket needs to be secure as it contains logins[citation needed]
+Alright, that's done. Now I need to probably test the process of loading from the backups to make sure it is working
+
+Also, need to create a backup of the LocalSettings.php configuration file. And the /images directory once ppl start uploading files here...
+Create repo with full configuration scripts/instructions to restore the wiki from a backup.
+
+probably will more the wiki to a cheaper lightsail server soon, since it's using <800Mb of ram, hopefully 1Gb will be enough. and in a year, probably will handoff the server to someone else
+Page / data backups
+
+Another option is to Export or Publish the mediawiki and upload the data to a public git repo.
+
+Ideally, the wiki could also be published to static-pages hosted by GitHub pages
+
+That way, there will always be a read-only copy of all the pages
+
+Looking at using https://www.mediawiki.org/wiki/Parsoid to translate xml dumps to html
+
+Alternatively, https://github.com/openzim/mwoffliner is basically a web-scraper so it's kinda dumb to webscrape your own server but whatever
+Make sections for 1st year FAQ
+
+Looks like someone already started: http://gt-student-wiki.org/mediawiki/index.php/First_Year_FAQ
+Setup email server
+
+Done; gmail account created
+
+Update: no longer friends with gmail, aws ses is my new best friend
+Secure secret keys
+
+https://www.mediawiki.org/wiki/Manual:Securing_database_passwords
+Also, configure SSL
+
+Should be fairly easy to do (using AWS route 53 rn)
+
+... Ok, this is done. I mostly followed https://lightsail.aws.amazon.com/ls/docs/en_us/articles/amazon-lightsail-using-lets-encrypt-certificates-with-lamp#link-the-lets-encrypt-certificate-files-in-the-apache-directory-lamp (using the Route 53 hosted zone to add the TXT stuff to) but had to make a few changes to the apache2 configuration. Right now it seems to work, and it auto-redirects http to https. I had to edit the default 000 configuration and add ServerName and ServerAlias, and ran certbot --apache. I really need to put a step-by-step tutorial or something for myself and others so I remember how to do it...
+
+There was also one thing in the config that I forgot about: https://www.mediawiki.org/wiki/Manual:$wgServer, had to change it to https or editing wouldn't work (got REST error)
+Renewing Let'sEncrypt certificate
+
+run: sudo certbot --preferred-challenges dns certonly --manual -d 'gt-student-wiki.org,*.gt-student-wiki.org'
+
+As prompted, update TXT entries in AWS Route 53
+
+You can use a website like this oneto check if that worked.
+
+Then, reload apache: sudo service apache2 restart ...and then check for a new expiration date for the cert using browser
+Configure account creation
+Require GT emails to create an account
+
+Something similar to this: https://www.mediawiki.org/wiki/Topic:Rg8scj0rl4iqulmg
+also, require account to edit lmfao
+Navigation
+
+    Main page
+    Recent changes
+    Random page
+    Help about MediaWiki
+
+Quick Links
+
+    Courses
+    Freshmen Guide
+    Majors
+    Minors
+
+Wiki tools
+
+    Special pages
+
+Page tools
+
+    Delete
+    Move
+    Protect
+
+More
+
+    What links here
+    Related changes
+    Printable version
+    Permanent link
+    Page information
+    Page logs
+
+Categories
+
+    Wikipedia articles with possible conflicts of interest
+    Articles which use infobox templates with no data rows
+    All articles with unsourced statements
+    Articles with unsourced statements
+
+Creative Commons Attribution-ShareAlike
+Powered by MediaWiki
+
+    This page was last edited on 31 December 2021, at 23:34.
+    Content is available under Creative Commons Attribution-ShareAlike unless otherwise noted.
+    Privacy policyAbout Georgia Tech Student WikiDisclaimers
+

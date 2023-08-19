@@ -1,0 +1,3 @@
+[submodule "secrets/wiki-secrets"]
+	path = secrets/wiki-secrets
+	url = git@github.com:AlexanderPuckhaber/wiki-secrets.git
